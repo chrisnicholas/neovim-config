@@ -11,7 +11,7 @@ end
 function M.config()
   require("github-theme").setup({
   })
-  vim.cmd.colorscheme('github_dark')
+  vim.cmd.colorscheme('github_dark_dimmed')
 end
 
 return M.init()

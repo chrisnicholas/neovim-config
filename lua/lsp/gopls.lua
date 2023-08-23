@@ -36,7 +36,7 @@ end
 
 -- Run gofmt on save
 function M.gofmt()
-  vim.lsp.buf.formatting_sync({}, 1000)
+  vim.lsp.buf.format({ async = false })
 end
 
 return M

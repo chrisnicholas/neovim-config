@@ -3,23 +3,15 @@ local M = {}
 function M.init()
   M.bootstrap_lazy_nvim()
 
-  local plugins = {
-    -- Classic Vim Plugins
-    'tpope/vim-fugitive',
-    'tpope/vim-commentary',
-    'tpope/vim-rails',
-
-    -- Lua Plugins
-    require('plugins.telescope'),
-    require('plugins.github-nvim-theme'),
-    require('plugins.nvim-lspconfig'),
-    require('plugins.gitsigns'),
-    require('plugins.lualine'),
-    require('plugins.nvim-treesitter'),
-    require('plugins.nvim-tree')
-  }
-
-  require("lazy").setup(plugins)
+  require("lazy").setup("plugins", {
+    install = { colorscheme = { "github-nvim-theme" } },
+    defaults = { lazy = true },
+    ui = {
+      border = "rounded",
+    },
+    checker = { enabled = true },
+    debug = false,
+  })
 end
 
 function M.bootstrap_lazy_nvim()

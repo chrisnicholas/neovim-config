@@ -3,6 +3,7 @@ local M = {}
 function M.init()
   return {
     'projekt0n/github-nvim-theme',
+    lazy = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = M.config
   }

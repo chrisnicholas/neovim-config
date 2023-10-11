@@ -3,14 +3,13 @@ local M = {}
 function M.init()
   return {
     'projekt0n/github-nvim-theme',
-    requires = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = M.config
   }
 end
 
 function M.config()
-  require("github-theme").setup({
-  })
+  require("github-theme").setup({})
   vim.cmd.colorscheme('github_dark_dimmed')
 end
 

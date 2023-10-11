@@ -5,7 +5,8 @@ function M.init()
 
   return {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} },
+    event = "BufReadPre",
+    dependencies = { {'nvim-lua/plenary.nvim'} },
     cmd = { 'Telescope' },
     config = M.config
   }

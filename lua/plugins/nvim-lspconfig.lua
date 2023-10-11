@@ -3,6 +3,7 @@ local M = {}
 function M.init()
   return {
     'neovim/nvim-lspconfig',
+    event = 'BufReadPre',
     config = M.config
   }
 end

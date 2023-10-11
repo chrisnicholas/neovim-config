@@ -3,6 +3,7 @@ local M = {}
 function M.init()
   return {
     'lewis6991/gitsigns.nvim',
+    event = 'BufReadPre',
     config = M.config
   }
 end

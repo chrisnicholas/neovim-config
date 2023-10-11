@@ -3,8 +3,7 @@ local M = {}
 function M.init()
   return {
     'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
-    after = 'github-nvim-theme',
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = M.config
   }
 end

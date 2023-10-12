@@ -4,6 +4,7 @@ function M.init()
   return {
     'neovim/nvim-lspconfig',
     event = 'BufReadPre',
+    cmd = 'LspInfo',
     config = M.config
   }
 end
@@ -11,7 +12,9 @@ end
 function M.config()
   require('plugins.lsp.gopls').init(M.on_attach)
   require('plugins.lsp.lua_ls').init(M.on_attach)
+  require('plugins.lsp.pyright').init(M.on_attach)
   require('plugins.lsp.solargraph').init(M.on_attach)
+  require('plugins.lsp.typescript_language_server').init(M.on_attach)
 end
 
 function M.on_attach(_, bufnr)
@@ -26,4 +29,3 @@ function M.on_attach(_, bufnr)
 end
 
 return M.init()
-

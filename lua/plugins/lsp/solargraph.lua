@@ -1,4 +1,3 @@
--- Ruby/Solargraph
 local M = {}
 
 function M.init(on_attach)

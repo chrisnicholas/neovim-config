@@ -13,7 +13,7 @@ function M.config()
   require('lualine').setup {
     options = {
       icons_enabled = true,
-      theme = 'github_dimmed',
+      theme = 'auto',
       component_separators = { left = '', right = ''},
       section_separators = { left = '', right = ''},
       disabled_filetypes = {},

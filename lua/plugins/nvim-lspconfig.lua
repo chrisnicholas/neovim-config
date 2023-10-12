@@ -10,6 +10,7 @@ function M.init()
 end
 
 function M.config()
+  require('plugins.lsp.bashls').init(M.on_attach)
   require('plugins.lsp.gopls').init(M.on_attach)
   require('plugins.lsp.lua_ls').init(M.on_attach)
   require('plugins.lsp.pyright').init(M.on_attach)

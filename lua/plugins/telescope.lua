@@ -10,17 +10,44 @@ function M.init()
   }
 end
 
-function M.init_func()
-  require("telescope").load_extension('notify')
-end
-
 function M.keymaps()
   return {
-    { "<leader>ff", ":Telescope find_files <cr>", desc = "Find Files"           },
-    { "<leader>fg", ":Telescope live_grep<cr>",   desc = "Live Grep"            },
-    { "<leader>fb", ":Telescope buffers<cr>",     desc = "Find Buffers"         },
-    { "<leader>fh", ":Telescope help_tags<cr>",   desc = "Help Tags"            },
-    { "<leader>fn", ":Telescope notify<cr>",      desc = "Notification History" }
+    {
+      "<leader>ff",
+      function()
+        require('telescope.builtin').find_files()
+      end,
+      desc = "Find Files"
+    },
+    {
+      "<leader>fg",
+      function()
+        require('telescope.builtin').live_grep()
+      end,
+      desc = "Live Grep"
+    },
+    {
+      "<leader>fb",
+      function()
+        require('telescope.builtin').buffers()
+      end,
+      desc = "Find Buffers"
+    },
+    {
+      "<leader>fh",
+      function()
+        require('telescope.builtin').help_tags()
+      end,
+      desc = "Help Tags"
+    },
+    {
+      "<leader>fn",
+      function()
+        require("telescope").load_extension('notify')
+        require('telescope').extensions.notify.notify()
+      end,
+      desc = "Notification History"
+    }
   }
 end
 

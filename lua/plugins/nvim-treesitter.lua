@@ -4,10 +4,7 @@ function M.init()
   return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    lazy = false,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-refactor",
-    },
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = M.opts,
     config = M.config
   }

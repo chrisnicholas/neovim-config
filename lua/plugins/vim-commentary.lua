@@ -3,7 +3,7 @@ local M = {}
 function M.init()
   return {
     'tpope/vim-commentary',
-    event = 'BufEnter'
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   }
 end
 

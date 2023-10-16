@@ -1,10 +1,6 @@
-local M = {}
+local M = {
+  'tpope/vim-rails',
+  ft = 'ruby',
+}
 
-function M.init()
-  return {
-    'tpope/vim-rails',
-    event = 'BufReadPre *.rb,*.erb'
-  }
-end
-
-return M.init()
+return M

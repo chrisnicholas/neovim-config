@@ -1,13 +1,8 @@
-local M = {}
-
-function M.init()
-  return {
-    'nvim-lualine/lualine.nvim',
-    lazy = false,
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-    config = M.config
-  }
-end
+local M = {
+  'nvim-lualine/lualine.nvim',
+  lazy = false,
+  dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+}
 
 function M.config()
   require('lualine').setup {
@@ -41,4 +36,4 @@ function M.config()
   }
 end
 
-return M.init()
+return M

@@ -1,13 +1,8 @@
-local M = {}
-
-function M.init()
-  return {
-    'neovim/nvim-lspconfig',
-    event = 'BufReadPre',
-    cmd = 'LspInfo',
-    config = M.config
-  }
-end
+local M = {
+  'neovim/nvim-lspconfig',
+  event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+  cmd = 'LspInfo',
+}
 
 function M.config()
   require('plugins.lsp.bashls').init(M.on_attach)
@@ -29,4 +24,4 @@ function M.on_attach(_, bufnr)
   vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', bufopts)
 end
 
-return M.init()
+return M

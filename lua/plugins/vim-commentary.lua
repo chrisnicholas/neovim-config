@@ -1,10 +1,6 @@
-local M = {}
+local M = {
+  'tpope/vim-commentary',
+  event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+}
 
-function M.init()
-  return {
-    'tpope/vim-commentary',
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-  }
-end
-
-return M.init()
+return M

@@ -1,16 +1,10 @@
-local M = {}
+local M = {
+  'nvim-telescope/telescope.nvim',
+  dependencies = { {'nvim-lua/plenary.nvim'} },
+  cmd = { 'Telescope' },
+}
 
-function M.init()
-  return {
-    'nvim-telescope/telescope.nvim',
-    dependencies = { {'nvim-lua/plenary.nvim'} },
-    cmd = { 'Telescope' },
-    keys = M.keymaps,
-    config = M.config
-  }
-end
-
-function M.keymaps()
+function M.keys()
   return {
     {
       "<leader>ff",
@@ -55,4 +49,4 @@ function M.config()
   require('telescope').setup()
 end
 
-return M.init()
+return M

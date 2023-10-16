@@ -1,12 +1,7 @@
-local M = {}
-
-function M.init()
-  return {
-    'lewis6991/gitsigns.nvim',
-    event = 'BufReadPre',
-    config = M.config
-  }
-end
+local M = {
+  'lewis6991/gitsigns.nvim',
+  event = 'BufReadPre',
+}
 
 function M.config()
   require('gitsigns').setup{
@@ -38,7 +33,4 @@ function M.config()
     }
 end
 
-function M.init_keymaps()
-end
-
-return M.init()
+return M

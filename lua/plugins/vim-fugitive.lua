@@ -1,10 +1,6 @@
-local M = {}
+local M = {
+  'tpope/vim-fugitive',
+  event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+}
 
-function M.init()
-  return {
-    'tpope/vim-fugitive',
-    event = 'BufReadPre'
-  }
-end
-
-return M.init()
+return M

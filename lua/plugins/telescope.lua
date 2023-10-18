@@ -5,48 +5,70 @@ local M = {
 }
 
 function M.keys()
+  local telescope = require('telescope')
+  local builtin = require('telescope.builtin')
+
   return {
     {
-      "<leader>ff",
+      '<leader>ff',
       function()
-        require('telescope.builtin').find_files()
+        builtin.find_files()
       end,
-      desc = "Find Files"
+      desc = 'Find Files'
     },
     {
-      "<leader>fg",
+      '<leader>fg',
       function()
-        require('telescope.builtin').live_grep()
+        builtin.live_grep()
       end,
-      desc = "Live Grep"
+      desc = 'Live Grep'
     },
     {
-      "<leader>fb",
+      '<leader>fb',
       function()
-        require('telescope.builtin').buffers()
+        builtin.buffers()
       end,
-      desc = "Find Buffers"
+      desc = 'Find Buffers'
     },
     {
-      "<leader>fh",
+      '<leader>fh',
       function()
-        require('telescope.builtin').help_tags()
+        builtin.help_tags()
       end,
-      desc = "Help Tags"
+      desc = 'Help Tags'
     },
     {
-      "<leader>fn",
+      '<leader>fs',
       function()
-        require("telescope").load_extension('notify')
-        require('telescope').extensions.notify.notify()
+        builtin.lsp_document_symbols()
       end,
-      desc = "Notification History"
+      desc = 'Help Tags'
+    },
+    {
+      '<leader>fn',
+      function()
+        telescope.load_extension('notify')
+        telescope.extensions.notify.notify()
+      end,
+      desc = 'Notification History'
     }
   }
 end
 
-function M.config()
-  require('telescope').setup()
+function M.opts()
+  return {
+    defaults = {
+      layout_strategy = 'horizontal',
+      layout_config = {
+        prompt_position = 'bottom',
+      },
+    }
+  }
+end
+
+function M.config(_, opts)
+  local telescope = require('telescope')
+  telescope.setup(opts)
 end
 
 return M

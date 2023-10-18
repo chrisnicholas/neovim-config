@@ -1,17 +1,10 @@
 local M = {
-  'nyoom-engineering/oxocarbon',
-  name = 'oxocarbon',
+  'nyoom-engineering/oxocarbon.nvim',
   lazy = true,
   priority = 1000,
 }
 
-M.opts = {
-}
-
-function M.config(_, opts)
-  local oxocarbon = require('oxocarbon')
-  oxocarbon.setup(opts)
-
+function M.config()
   vim.opt.background = 'dark'
   vim.cmd('colorscheme oxocarbon')
 end

@@ -1,5 +1,5 @@
-local utils = require('utils.keymap')
-local nmap = utils.nmap
+local keymap = require('utils.keymap')
+local nmap = keymap.nmap
 
 -- Select window with <option> + h,j,k,l
 nmap("<A-k>", "<C-w>k")

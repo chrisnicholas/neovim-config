@@ -35,6 +35,7 @@ M.opts = {
     "ruby",
     "rust",
     "swift",
+    "terraform",
     "typescript",
     "vim",
     "vimdoc",

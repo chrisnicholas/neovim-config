@@ -3,6 +3,11 @@ local M = {
   lazy = false,
   build = ':TSUpdate',
   event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    "nvim-treesitter/nvim-treesitter-refactor",
+    "nvim-treesitter/nvim-treesitter-context",
+  },
 }
 
 M.opts = {
@@ -100,11 +105,11 @@ function M.config(_, opts)
   nvim_treesitter.setup(opts)
 
   -- Code Folding
-  -- vim.opt.foldmethod = "expr"
-  -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-  -- vim.opt.foldlevel = 99
-  -- vim.opt.foldlevelstart = -1
-  -- vim.opt.foldenable = true
+  vim.opt.foldmethod = "expr"
+  vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+  vim.opt.foldlevel = 99
+  vim.opt.foldlevelstart = -1
+  vim.opt.foldenable = true
 end
 
 return M

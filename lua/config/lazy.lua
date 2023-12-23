@@ -28,7 +28,7 @@ function M.init()
       rtp = {
         disabled_plugins = {
           'gzip',
-          -- 'matchit',
+          'matchit',
           'matchparen',
           'netrwPlugin',
           'tarPlugin',

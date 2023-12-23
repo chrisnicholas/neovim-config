@@ -5,7 +5,7 @@ function M.init(on_attach)
     on_attach = on_attach,
     settings = {
       solargraph = {
-        diagnostics = false
+        diagnostics = true
       }
     }
   }

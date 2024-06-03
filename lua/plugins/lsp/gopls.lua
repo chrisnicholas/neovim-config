@@ -1,9 +1,10 @@
 local M = {}
 
-function M.init(on_attach)
+function M.init(on_attach, capabilities)
   -- Go
   require('lspconfig').gopls.setup{
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities
   }
 
   vim.api.nvim_create_autocmd("BufWritePre", {

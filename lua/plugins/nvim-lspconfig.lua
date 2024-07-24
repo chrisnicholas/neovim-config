@@ -11,6 +11,8 @@ function M.config()
   require('plugins.lsp.gopls').init(M.on_attach, capabilities)
   require('plugins.lsp.lua_ls').init(M.on_attach, capabilities)
   require('plugins.lsp.pyright').init(M.on_attach)
+  -- Optionally use ruby lsp if ruby version is new enough.
+  -- require('plugins.lsp.ruby_lsp').init(M.on_attach, capabilities)
   require('plugins.lsp.solargraph').init(M.on_attach, capabilities)
   require('plugins.lsp.typescript_language_server').init(M.on_attach)
   require('plugins.lsp.terraform_ls').init(M.on_attach)

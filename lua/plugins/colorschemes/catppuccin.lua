@@ -12,8 +12,6 @@ M.opts = {
 function M.config(_, opts)
   local catppuccin = require('catppuccin')
   catppuccin.setup(opts)
-
-  vim.cmd.colorscheme('catppuccin')
 end
 
 return M

@@ -6,7 +6,7 @@ function M.init()
   require('lazy').setup('plugins', {
     install = {
       missing = true,
-      colorscheme = { 'github_dark_dimmed' }
+      -- colorscheme = { 'github_dark_dimmed' }
     },
     defaults = {
       lazy = true

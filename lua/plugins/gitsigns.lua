@@ -29,6 +29,7 @@ function M.config()
         map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
         map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
         map('n', '<leader>tb', gs.toggle_current_line_blame)
+        map('n', '<leader>bl', gs.blame_line)
       end
     }
 end

@@ -1,5 +1,5 @@
 local LIGHT_COLORSCHEME = 'github_light_default'
-local DARK_COLORSCHEME = 'github_dark_default'
+local DARK_COLORSCHEME = 'github_dark_dimmed'
 
 local M = {}
 

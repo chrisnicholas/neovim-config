@@ -4,7 +4,15 @@ local M = {
   cmd = 'LspInfo',
 }
 
+M.dependencies = {
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim"
+}
+
 function M.config()
+  require('mason').setup({})
+  require('mason-lspconfig').setup({})
+
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   require('plugins.lsp.bashls').init(M.on_attach)

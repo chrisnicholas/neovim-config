@@ -24,6 +24,7 @@ M.keys = {
   { '<leader>cc', '<CMD>CopilotChatToggle<CR>', mode = {'n', 'v'} },
   { '<leader>ce', '<CMD>CopilotChatExplain<CR>', mode = {'n', 'v'} },
   { '<leader>co', '<CMD>CopilotChatOptimize<CR>', mode = {'n', 'v'} },
+  { '<leader>cr', '<CMD>CopilotChatReset<CR>', mode = {'n'} },
 }
 
 return M

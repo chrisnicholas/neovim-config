@@ -1,9 +1,9 @@
 local M = {}
 
 -- Set keymap
-function M.map(mode, shortcut, command, opts)
-  opts = vim.tbl_deep_extend('force', opts or {}, { noremap = true })
-  vim.api.nvim_set_keymap(mode, shortcut, command, opts)
+M.map = function(mode, l, r, opts)
+  opts = opts or {}
+  vim.keymap.set(mode, l, r, opts)
 end
 
 -- Normal mode keymap

@@ -26,6 +26,7 @@ M.opts = {
     "json",
     "lua",
     "markdown",
+    "markdown_inline",
     "python",
     "query",
     "ruby",

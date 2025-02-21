@@ -22,6 +22,7 @@ function M.config()
   -- Optionally use ruby lsp if ruby version is new enough.
   -- require('plugins.lsp.ruby_lsp').init(M.on_attach, capabilities)
   require('plugins.lsp.solargraph').init(M.on_attach, capabilities)
+  require('plugins.lsp.cucumber-language-server').init(M.on_attach, capabilities)
   require('plugins.lsp.typescript_language_server').init(M.on_attach)
   require('plugins.lsp.terraform_ls').init(M.on_attach)
 end

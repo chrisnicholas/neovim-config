@@ -5,9 +5,13 @@ local M = {
   dependencies = { 'nvim-tree/nvim-web-devicons' },
 }
 
-function M.config(_, opts)
+function M.config()
   local github_theme = require("github-theme")
-  github_theme.setup(opts)
+  github_theme.setup({
+    options = {
+      transparent = true,
+    }
+  })
 end
 
 return M

@@ -15,16 +15,16 @@ function M.config()
 
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-  require('plugins.lsp.bashls').init(M.on_attach)
+  require('plugins.lsp.bashls').init(M.on_attach, capapilities)
   require('plugins.lsp.gopls').init(M.on_attach, capabilities)
   require('plugins.lsp.lua_ls').init(M.on_attach, capabilities)
-  require('plugins.lsp.pyright').init(M.on_attach)
+  require('plugins.lsp.pyright').init(M.on_attach, capabilities)
   -- Optionally use ruby lsp if ruby version is new enough.
   -- require('plugins.lsp.ruby_lsp').init(M.on_attach, capabilities)
   require('plugins.lsp.solargraph').init(M.on_attach, capabilities)
   require('plugins.lsp.cucumber-language-server').init(M.on_attach, capabilities)
-  require('plugins.lsp.typescript_language_server').init(M.on_attach)
-  require('plugins.lsp.terraform_ls').init(M.on_attach)
+  require('plugins.lsp.typescript_language_server').init(M.on_attach, capabilities)
+  require('plugins.lsp.terraform_ls').init(M.on_attach, capabilities)
 end
 
 function M.on_attach(_, bufnr)

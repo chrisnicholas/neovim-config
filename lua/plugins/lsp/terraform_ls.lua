@@ -1,8 +1,9 @@
 local M = {}
 
-function M.init(on_attach)
+function M.init(on_attach, capabilities)
   require('lspconfig').terraformls.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities,
   }
   vim.api.nvim_create_autocmd({"BufWritePre"}, {
     pattern = {"*.tf", "*.tfvars"},

@@ -1,74 +1,34 @@
 local M = {
   'nvim-telescope/telescope.nvim',
+  lazy = true,
   dependencies = { {'nvim-lua/plenary.nvim'} },
   cmd = { 'Telescope' },
 }
 
-function M.keys()
-  local telescope = require('telescope')
-  local builtin = require('telescope.builtin')
-
-  return {
-    {
-      '<leader>ff',
-      function()
-        builtin.find_files()
-      end,
-      desc = 'Find Files'
-    },
-    {
-      '<leader>fg',
-      function()
-        builtin.live_grep()
-      end,
-      desc = 'Live Grep'
-    },
-    {
-      '<leader>fb',
-      function()
-        builtin.buffers()
-      end,
-      desc = 'Find Buffers'
-    },
-    {
-      '<leader>fh',
-      function()
-        builtin.help_tags()
-      end,
-      desc = 'Help Tags'
-    },
-    {
-      '<leader>fs',
-      function()
-        builtin.lsp_document_symbols()
-      end,
-      desc = 'Help Tags'
-    },
-    {
-      '<leader>fn',
-      function()
-        telescope.load_extension('notify')
-        telescope.extensions.notify.notify()
-      end,
-      desc = 'Notification History'
-    }
+M.keys = {
+  { '<leader>ff', '<CMD>Telescope find_files<CR>', desc = 'Find Files' },
+  { '<leader>fg', '<CMD>Telescope live_grep<CR>', desc = 'Live Grep' },
+  { '<leader>fb', '<CMD>Telescope buffers<CR>', desc = 'Find Buffers' },
+  { '<leader>fh', '<CMD>Telescope help_tags<CR>', desc = 'Help Tags' },
+  { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', desc = 'Help Tags' },
+  {
+    '<leader>fn',
+    function()
+      local telescope = require('telescope')
+      telescope.load_extension('notify')
+      telescope.extensions.notify.notify()
+    end,
+    desc = 'Notification History'
   }
-end
+}
 
-function M.opts()
-  return {
-    defaults = {
-      layout_strategy = 'horizontal',
-      layout_config = {
-        prompt_position = 'bottom',
-      },
-    }
+M.opts = {
+  defaults = {
+    layout_strategy = 'horizontal',
+    layout_config = {
+      prompt_position = 'bottom',
+    },
   }
-end
-
-function M.config(_, opts)
-  local telescope = require('telescope')
-  telescope.setup(opts)
-end
+}
 
 return M

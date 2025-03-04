@@ -36,7 +36,7 @@ CopilotChatSpec.opts = {
   chat_autocomplete = true, -- Enable chat autocompletion (when disabled, requires manual `mappings.complete` trigger)
   mappings = {
     complete = {
-      insert = '',
+      insert = '', -- Default value of <Tab> conflicts with copilot.vim
     },
     close = {
       normal = 'q',

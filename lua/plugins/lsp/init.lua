@@ -13,11 +13,6 @@ local MasonSpec = {
   dependencies = { "williamboman/mason-lspconfig.nvim" }
 }
 
-function MasonSpec.config()
-  require('mason').setup({})
-  require('mason-lspconfig').setup({})
-end
-
 local LspConfigSpec = {
   'neovim/nvim-lspconfig',
   dependencies = { MasonSpec },
@@ -33,7 +28,7 @@ function LspConfigSpec.config()
   require('plugins.lsp.lua_ls').init(on_attach, capabilities)
   require('plugins.lsp.pyright').init(on_attach, capabilities)
   -- Optionally use ruby lsp if ruby version is new enough.
-  -- require('plugins.lsp.ruby_lsp').init(on_attach, capabilities)
+  require('plugins.lsp.ruby_lsp').init(on_attach, capabilities)
   require('plugins.lsp.solargraph').init(on_attach, capabilities)
   require('plugins.lsp.cucumber-language-server').init(on_attach, capabilities)
   require('plugins.lsp.typescript_language_server').init(on_attach, capabilities)

@@ -8,14 +8,27 @@ local function on_attach(_, bufnr)
   vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', bufopts)
 end
 
+
+local MasonLspConfigSpec = {
+  "williamboman/mason-lspconfig.nvim",
+  lazy = false,
+}
+
+MasonLspConfigSpec.opts = {
+  ensure_installed = {},
+  automatic_installation = true,
+}
+
 local MasonSpec = {
   "williamboman/mason.nvim",
-  dependencies = { "williamboman/mason-lspconfig.nvim" }
+  lazy = false,
+  main = 'mason',
+  config = true,
+  dependencies = { MasonLspConfigSpec }
 }
 
 local LspConfigSpec = {
   'neovim/nvim-lspconfig',
-  dependencies = { MasonSpec },
   event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   cmd = 'LspInfo',
 }
@@ -35,4 +48,7 @@ function LspConfigSpec.config()
   require('plugins.lsp.terraform_ls').init(on_attach, capabilities)
 end
 
-return LspConfigSpec
+return {
+  MasonSpec,
+  LspConfigSpec,
+}

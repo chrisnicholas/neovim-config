@@ -11,7 +11,6 @@ end
 
 local MasonLspConfigSpec = {
   "williamboman/mason-lspconfig.nvim",
-  lazy = false,
 }
 
 MasonLspConfigSpec.opts = {
@@ -24,12 +23,12 @@ local MasonSpec = {
   lazy = false,
   main = 'mason',
   config = true,
-  dependencies = { MasonLspConfigSpec }
 }
 
 local LspConfigSpec = {
   'neovim/nvim-lspconfig',
   event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+  dependencies = { MasonLspConfigSpec },
   cmd = 'LspInfo',
 }
 
@@ -40,7 +39,6 @@ function LspConfigSpec.config()
   require('plugins.lsp.gopls').init(on_attach, capabilities)
   require('plugins.lsp.lua_ls').init(on_attach, capabilities)
   require('plugins.lsp.pyright').init(on_attach, capabilities)
-  -- Optionally use ruby lsp if ruby version is new enough.
   require('plugins.lsp.ruby_lsp').init(on_attach, capabilities)
   require('plugins.lsp.solargraph').init(on_attach, capabilities)
   require('plugins.lsp.cucumber-language-server').init(on_attach, capabilities)

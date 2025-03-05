@@ -3,7 +3,6 @@ local M = {
   name = 'github-theme',
   lazy = false,
   priority = 1000,
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
 }
 
 M.opts = {

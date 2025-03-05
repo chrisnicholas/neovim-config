@@ -10,11 +10,7 @@ local CopilotChatSpec = {
   "CopilotC-Nvim/CopilotChat.nvim",
   event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   build = "make tiktoken", -- Only on MacOS or Linux
-}
-
-CopilotChatSpec.dependencies = {
-  CopilotSpec,
-  { "nvim-lua/plenary.nvim", branch = "master" },
+  dependencies = { "github/copilot.vim" }
 }
 
 CopilotChatSpec.opts = {
@@ -94,4 +90,4 @@ CopilotChatSpec.keys = {
   { '<leader>cr', '<CMD>CopilotChatReset<CR>', mode = {'n'} },
 }
 
-return CopilotChatSpec
+return { CopilotSpec, CopilotChatSpec }

@@ -3,6 +3,10 @@ vim.opt.number = true
 vim.opt.numberwidth = 5
 vim.opt.signcolumn = 'yes'
 
+-- Let Neovim set the terminal title
+vim.opt.title = true
+vim.opt.titlestring = [[%f %h%m%r%w %{v:progname} (%{tabpagenr()} of %{tabpagenr('$')})]]
+
 -- Mouse
 vim.opt.mouse = 'a'
 

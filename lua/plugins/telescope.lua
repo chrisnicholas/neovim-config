@@ -14,9 +14,10 @@ M.keys = {
 
 M.opts = {
   defaults = {
-    layout_strategy = 'horizontal',
+    layout_strategy = 'flex',
+    sorting_strategy = 'ascending',
     layout_config = {
-      prompt_position = 'bottom',
+      prompt_position = 'top',
     },
   }
 }

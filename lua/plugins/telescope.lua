@@ -10,7 +10,10 @@ M.keys = {
   { '<leader>fh', '<CMD>Telescope help_tags<CR>', desc = 'Help Tags' },
   { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', desc = 'Help Tags' },
   { '<leader>fn', '<CMD>Telescope notify<CR>', desc = 'Notification History' },
-  { '<leader>fd', '<CMD>Telescope diagnostics<CR>', desc = 'LSP Diagnostics' }
+  { '<leader>fd', '<CMD>Telescope diagnostics<CR>', desc = 'LSP Diagnostics' },
+  { '<leader>gd', '<CMD>Telescope lsp_definitions<CR>', desc = 'LSP Definitions' },
+  { '<leader>gr', '<CMD>Telescope lsp_references<CR>', desc = 'LSP References' },
+  { '<leader>gi', '<CMD>Telescope lsp_implementations<CR>', desc = 'LSP References' },
 }
 
 M.opts = {
@@ -19,6 +22,8 @@ M.opts = {
     sorting_strategy = 'ascending',
     layout_config = {
       prompt_position = 'top',
+      flip_columns = 250,
+      flip_lines = 40,
     },
   }
 }

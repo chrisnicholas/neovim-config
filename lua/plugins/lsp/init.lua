@@ -1,13 +1,9 @@
-local function on_attach(_, bufnr)
-  local bufopts = { noremap = true, buffer = bufnr }
 
-  vim.keymap.set('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', bufopts)
-  vim.keymap.set('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
-  vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', bufopts)
-  vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', bufopts)
-  vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', bufopts)
-end
-
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   callback = function(event)
+--     on_attach(nil, event.buf)
+--   end,
+-- })
 
 local MasonLspConfigSpec = {
   "williamboman/mason-lspconfig.nvim",
@@ -16,6 +12,7 @@ local MasonLspConfigSpec = {
 MasonLspConfigSpec.opts = {
   ensure_installed = {},
   automatic_installation = true,
+  automatic_enable = false,
 }
 
 local MasonSpec = {
@@ -33,6 +30,16 @@ local LspConfigSpec = {
 }
 
 function LspConfigSpec.config()
+  local function on_attach(_, bufnr)
+    local bufopts = { noremap = true, buffer = bufnr }
+
+    vim.keymap.set('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', bufopts)
+    vim.keymap.set('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
+    vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', bufopts)
+    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', bufopts)
+    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', bufopts)
+  end
+
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   require('plugins.lsp.bashls').init(on_attach, capabilities)

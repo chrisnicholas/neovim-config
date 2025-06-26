@@ -18,3 +18,20 @@ nmap("<S-Up>", "<c-u>")
 nmap("<S-Down>", "<c-d>")
 nmap("<S-Left>", "zH")
 nmap("<S-Right>", "zL")
+
+-- Copying file paths to system clipboard
+local function copy_file_path_to_clip_board(expansion)
+  vim.fn.setreg("+", vim.fn.expand(expansion))
+end
+
+local function copy_absolute_path_to_clipboard()
+  copy_file_path_to_clip_board("%:p")
+end
+
+nmap("<leader>cfp", copy_absolute_path_to_clipboard)
+
+local function copy_relative_path_to_clipboard()
+  copy_file_path_to_clip_board("%:.")
+end
+
+nmap("<leader>crp", copy_relative_path_to_clipboard)

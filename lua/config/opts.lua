@@ -25,6 +25,9 @@ vim.opt.number = true
 vim.opt.numberwidth = 5
 vim.opt.signcolumn = 'yes'
 
+-- Hilight current line
+vim.opt.cursorline = true
+
 -- Let Neovim set the terminal title
 vim.opt.title = true
 vim.api.nvim_create_autocmd({'BufEnter', 'DirChanged'}, {

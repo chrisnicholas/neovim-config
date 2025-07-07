@@ -2,7 +2,6 @@ local M = {
   "nvim-treesitter/nvim-treesitter",
   lazy = true,
   build = ":TSUpdate",
-  main = "nvim-treesitter.configs",
   event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
@@ -103,6 +102,7 @@ function M.opts(_, opts)
     },
   })
 
+  require("nvim-treesitter.configs").setup(opts)
   require("treesitter-context").setup({ enable = true })
 
   -- Code Folding

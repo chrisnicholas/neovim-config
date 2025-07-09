@@ -1,10 +1,3 @@
-
--- vim.api.nvim_create_autocmd("LspAttach", {
---   callback = function(event)
---     on_attach(nil, event.buf)
---   end,
--- })
-
 local MasonLspConfigSpec = {
   "williamboman/mason-lspconfig.nvim",
 }
@@ -44,7 +37,7 @@ function LspConfigSpec.config()
 
   require('plugins.lsp.bashls').init(on_attach, capabilities)
   require('plugins.lsp.gopls').init(on_attach, capabilities)
-  require('plugins.lsp.lua_ls').init(on_attach, capabilities)
+  -- require('plugins.lsp.lua_ls').init(on_attach, capabilities)
   require('plugins.lsp.pyright').init(on_attach, capabilities)
   -- require('plugins.lsp.ruby_lsp').init(on_attach, capabilities)
   require('plugins.lsp.rust-analyzer').init(on_attach, capabilities)

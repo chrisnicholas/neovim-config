@@ -30,7 +30,7 @@ vim.opt.cursorline = true
 
 -- Let Neovim set the terminal title
 vim.opt.title = true
-vim.api.nvim_create_autocmd({'BufEnter', 'DirChanged'}, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'DirChanged' }, {
   callback = function()
     vim.opt.titlestring = set_titlestring()
   end

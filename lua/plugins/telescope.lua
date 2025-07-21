@@ -16,6 +16,7 @@ M.keys = {
   { '<leader>gi', '<CMD>Telescope lsp_implementations<CR>',  desc = 'LSP References' },
   { '<leader>gc', '<CMD>Telescope git_commits<CR>',          desc = 'Git Commits' },
   { '<leader>gb', '<CMD>Telescope git_branches<CR>',         desc = 'Git Branches' },
+  { '<leader>fa', '<CMD>Telescope autocommands<CR>',         desc = 'Autocommands' },
 }
 
 M.opts = {

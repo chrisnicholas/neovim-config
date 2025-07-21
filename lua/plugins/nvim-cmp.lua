@@ -61,8 +61,8 @@ function M.config()
       { name = 'nvim_lsp' },
       { name = 'luasnip' }, -- For luasnip users.
     }, {
-        { name = 'buffer' },
-      })
+      { name = 'buffer' },
+    })
   })
 
   -- Set configuration for specific filetype.
@@ -70,8 +70,8 @@ function M.config()
     sources = cmp.config.sources({
       { name = 'git' },
     }, {
-        { name = 'buffer' },
-      })
+      { name = 'buffer' },
+    })
   })
 
   -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -88,8 +88,8 @@ function M.config()
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
-        { name = 'cmdline' }
-      }),
+      { name = 'cmdline' }
+    }),
     matching = { disallow_symbol_nonprefix_matching = false }
   })
 end

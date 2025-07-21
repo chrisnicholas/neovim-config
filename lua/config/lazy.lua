@@ -38,6 +38,10 @@ function M.init()
         },
       },
     },
+    rocks = {
+      enabled = false,
+      hererocks = false,
+    },
     debug = false,
   })
 end

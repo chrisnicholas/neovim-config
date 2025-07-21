@@ -1,6 +1,7 @@
 local M = {
   'nvim-tree/nvim-tree.lua',
-  opts = {}
+  opts = {},
+  enabled = false,
 }
 
 M.keys = {

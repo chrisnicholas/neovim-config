@@ -7,7 +7,7 @@ local ENABLED_LSP_CONFIGS = {
   "pyright",
   "rust_analyzer",
   "solargraph",
-  "terraformls",
+  "tofu_ls",
   "ts_ls",
 }
 

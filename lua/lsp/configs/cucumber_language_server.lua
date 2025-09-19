@@ -1,4 +1,7 @@
-local M = {
+--- CucumberLS configuration
+---
+---@type vim.lsp.ClientConfig
+local CucumberLS = {
   cmd = { "cucumber-language-server", "--stdio" },
   filetypes = { "cucumber", "feature" },
   settings = {
@@ -8,4 +11,4 @@ local M = {
   }
 }
 
-return M
+return CucumberLS

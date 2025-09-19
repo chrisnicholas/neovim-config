@@ -1,9 +1,11 @@
--- gopls
---
--- Reference:
--- https://github.com/golang/vscode-go/wiki/settings
--- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-local M = {
+--- gopls configuration
+---
+--- Reference:
+--- - https://github.com/golang/vscode-go/wiki/settings
+--- - https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+---
+---@type vim.lsp.ClientConfig
+local Gopls = {
   settings = {
     gopls = {
       usePlaceholders = true,
@@ -24,16 +26,16 @@ local M = {
   },
 }
 
-function M.on_init(_client, _init_result)
+function Gopls.on_init(_client, _init_result)
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.go",
     callback = function(event)
-      M.goimports(event)
+      Gopls.goimports(event)
     end,
   })
 end
 
-function M.goimports(event)
+function Gopls.goimports(event)
   local utils = require("lsp.utils")
   local client = vim.lsp.get_clients({ bufnr = event.buf, name = "gopls" })[1]
   local encoding = utils.get_client_encoding(client)
@@ -51,4 +53,4 @@ function M.goimports(event)
   end
 end
 
-return M
+return Gopls

@@ -55,3 +55,9 @@ local function copy_relative_path_to_clipboard()
 end
 
 vim.keymap.set({ "n", "v" }, "<leader>crp", copy_relative_path_to_clipboard)
+
+local function copy_filename_to_clipboard()
+  copy_file_path_to_clip_board("%:t")
+end
+
+vim.keymap.set({ "n", "v" }, "<leader>cfn", copy_filename_to_clipboard)

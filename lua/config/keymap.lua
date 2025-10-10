@@ -1,23 +1,20 @@
-local keymap = require('utils.keymap')
-local nmap = keymap.nmap
-
 -- Select window with <option> + h,j,k,l
-nmap("<A-k>", "<C-w>k")
-nmap("<A-j>", "<C-w>j")
-nmap("<A-h>", "<C-w>h")
-nmap("<A-l>", "<C-w>l")
+vim.keymap.set("n", "<A-k>", "<C-w>k")
+vim.keymap.set("n", "<A-j>", "<C-w>j")
+vim.keymap.set("n", "<A-h>", "<C-w>h")
+vim.keymap.set("n", "<A-l>", "<C-w>l")
 
 -- Scroll with arrow keys
-nmap("<Up>", "<c-y>")
-nmap("<Down>", "<c-e>")
-nmap("<Left>", "zh")
-nmap("<Right>", "zl")
+vim.keymap.set("n", "<Up>", "<c-y>")
+vim.keymap.set("n", "<Down>", "<c-e>")
+vim.keymap.set("n", "<Left>", "zh")
+vim.keymap.set("n", "<Right>", "zl")
 
 -- Half-paging with arrow keys
-nmap("<S-Up>", "<c-u>")
-nmap("<S-Down>", "<c-d>")
-nmap("<S-Left>", "zH")
-nmap("<S-Right>", "zL")
+vim.keymap.set("n", "<S-Up>", "<c-u>")
+vim.keymap.set("n", "<S-Down>", "<c-d>")
+vim.keymap.set("n", "<S-Left>", "zH")
+vim.keymap.set("n", "<S-Right>", "zL")
 
 -- Copying file paths to system clipboard
 local function copy_file_path_to_clip_board(expansion)
@@ -55,3 +52,9 @@ local function copy_relative_path_to_clipboard()
 end
 
 vim.keymap.set({ "n", "v" }, "<leader>crp", copy_relative_path_to_clipboard)
+
+local function copy_filename_to_clipboard()
+  copy_file_path_to_clip_board("%:t")
+end
+
+vim.keymap.set({ "n", "v" }, "<leader>cfn", copy_filename_to_clipboard)

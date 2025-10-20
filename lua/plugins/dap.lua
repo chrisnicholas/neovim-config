@@ -1,6 +1,8 @@
 -- local arrows = require('icons').arrows
 
--- Set up icons.
+-- Set up icons and priorities.
+local sign_priorities = require('config.signs').priorities.dap
+
 local icons = {
     Stopped = { '', 'DiagnosticWarn', 'DapStoppedLine' },
     Breakpoint = '',
@@ -8,6 +10,14 @@ local icons = {
     BreakpointRejected = { '', 'DiagnosticError' },
     -- LogPoint = arrows.right,
 }
+
+local priority_map = {
+    Stopped = sign_priorities.stopped,
+    Breakpoint = sign_priorities.breakpoint,
+    BreakpointCondition = sign_priorities.breakpoint_condition,
+    BreakpointRejected = sign_priorities.breakpoint_rejected,
+}
+
 for name, sign in pairs(icons) do
     sign = type(sign) == 'table' and sign or { sign }
     vim.fn.sign_define('Dap' .. name, {
@@ -16,6 +26,7 @@ for name, sign in pairs(icons) do
         texthl = sign[2] or 'DiagnosticInfo',
         linehl = sign[3],
         numhl = sign[3],
+        priority = priority_map[name],
     })
 end
 

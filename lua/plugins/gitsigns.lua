@@ -4,7 +4,17 @@ local M = {
 }
 
 function M.config()
+  local priorities = require('config.signs').priorities.gitsigns
+
   require('gitsigns').setup {
+    signs = {
+      add          = { text = '│', priority = priorities.add },
+      change       = { text = '│', priority = priorities.change },
+      delete       = { text = '_', priority = priorities.delete },
+      topdelete    = { text = '‾', priority = priorities.topdelete },
+      changedelete = { text = '~', priority = priorities.changedelete },
+      untracked    = { text = '┆', priority = priorities.untracked },
+    },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
 

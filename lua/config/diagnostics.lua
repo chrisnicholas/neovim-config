@@ -8,6 +8,12 @@ local Diagnostics = {
 function Diagnostics.init(config)
   config = vim.tbl_deep_extend("force", Diagnostics.default_config, config or {})
 
+  -- Set diagnostic sign priorities
+  local sign_priorities = require('config.signs').priorities
+  config.signs = {
+    priority = sign_priorities.diagnostics,
+  }
+
   vim.diagnostic.config(config)
 
   -- Filter diagnostics to show only highest severity per line

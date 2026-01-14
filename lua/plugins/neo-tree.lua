@@ -65,6 +65,8 @@ M.opts = {
       ["l"] = "open",
       ["h"] = "close_node",
       ["<space>"] = "none",
+      ["/"] = "filter_as_you_type",
+      ["<esc>"] = "clear_filter",
       ["Y"] = {
         function(state)
           local node = state.tree:get_node()

@@ -3,7 +3,12 @@ local CopilotSpec = {
 }
 
 function CopilotSpec.init()
-  vim.g.copilot_node_command = '/opt/homebrew/bin/node'
+  -- Resolved once at startup from $PATH. Relaunch Neovim after
+  -- switching node versions if using nvm/fnm/mise.
+  local node = vim.fn.exepath('node')
+  if node ~= '' then
+    vim.g.copilot_node_command = node
+  end
 end
 
 local CopilotChatSpec = {

@@ -100,7 +100,9 @@ M.keys = {
   },
   {
     '<leader>dB',
-    '<cmd>FzfLua dap_breakpoints<cr>',
+    function()
+      require('dap').list_breakpoints()
+    end,
     desc = 'List breakpoints',
   },
   {

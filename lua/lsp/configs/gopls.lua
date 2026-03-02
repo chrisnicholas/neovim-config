@@ -28,6 +28,7 @@ local Gopls = {
 
 function Gopls.on_init(_client, _init_result)
   vim.api.nvim_create_autocmd("BufWritePre", {
+    group = vim.api.nvim_create_augroup("gopls_goimports", { clear = true }),
     pattern = "*.go",
     callback = function(event)
       Gopls.goimports(event)
@@ -38,6 +39,7 @@ end
 function Gopls.goimports(event)
   local utils = require("lsp.utils")
   local client = vim.lsp.get_clients({ bufnr = event.buf, name = "gopls" })[1]
+  if not client then return end
   local encoding = utils.get_client_encoding(client)
   local params = vim.lsp.util.make_range_params(0, encoding)
   params = vim.tbl_extend("force", params, { context = { only = { "source.organizeImports" } } })

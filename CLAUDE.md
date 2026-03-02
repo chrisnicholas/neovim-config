@@ -29,17 +29,17 @@ lua/
 │   ├── augroup.lua      # Augroup definitions
 │   ├── autocmd.lua      # Filetype-specific settings
 │   ├── diagnostics.lua  # LSP diagnostics configuration
-│   ├── keymap.lua       # Global keymaps
+│   ├── keymap.lua       # Global keymaps (file path copy, window nav, scrolling)
 │   ├── lazy.lua         # Plugin manager setup
-│   └── opts.lua         # Neovim options
+│   ├── opts.lua         # Neovim options
+│   └── signs.lua        # Sign/icon priorities (used by DAP, diagnostics)
 ├── lsp/                 # LSP server configurations
 │   ├── configs/         # Per-server custom configs (gopls, lua_ls, etc.)
 │   └── utils.lua        # LSP utilities (keymaps, formatting, autocommands)
 ├── plugins/             # Plugin specifications (one per file)
 │   └── colorschemes/    # Color scheme plugins
 └── utils/               # Helper utilities
-    ├── autocmd.lua      # Autocmd helper functions
-    └── keymap.lua       # Keymap helper functions
+    └── autocmd.lua      # Autocmd helper functions
 ```
 
 ### LSP Configuration
@@ -50,7 +50,7 @@ lua/
   - Automatically loaded and merged with defaults
 - **LSP behavior**:
   - Keymaps set on `LspAttach` event (lua/lsp/utils.lua:22-32)
-  - Auto-format on save (lua/lsp/utils.lua:60-64)
+  - Auto-format on save (lua/lsp/utils.lua:38-46)
   - Default capabilities include nvim-cmp completion
 
 ### Key Plugin Files
@@ -58,19 +58,24 @@ lua/
 - `lua/plugins/nvim-cmp.lua`: Completion engine with snippet support
 - `lua/plugins/telescope.lua`: Fuzzy finder keymaps (`<leader>f*`, `<leader>g*`)
 - `lua/plugins/neo-tree.lua`: File explorer (`<leader>fe`, `<leader>ge`, `<leader>be`)
+- `lua/plugins/snacks.lua`: Dashboard, indent guides, scope highlighting, terminal toggle
 - `lua/plugins/nvim-treesitter.lua`: Treesitter configuration
-- `lua/plugins/copilot.lua`: GitHub Copilot integration
-- `lua/plugins/dap.lua`: Debug Adapter Protocol setup
+- `lua/plugins/copilot.lua`: GitHub Copilot (`copilot.vim`) + CopilotChat (`<leader>cc/ce/co/cr`)
+- `lua/plugins/dap.lua`: Debug Adapter Protocol — auto-opens dapui on session start; loads `launch.json` for codelldb; includes a Lua DAP adapter via `one-small-step-for-vimkind`
 
 ### Keymap Conventions
-- `<leader>f*`: Telescope find commands (files, grep, buffers, help)
-- `<leader>g*`: Git/LSP navigation (definitions, references, commits, branches)
-- `<leader>c*`: Copy file paths to clipboard (`cfp` = absolute, `crp` = relative)
-  - In visual mode, includes line numbers (e.g., `file.lua:10-15`)
+- `<leader>ff/fg/fb/fh/fs/fn/fd/fa`: Telescope (files, grep, buffers, help, symbols, notifications, diagnostics, autocommands)
+- `<leader>gd/gr/gi/gc/gb`: Telescope LSP/git (definitions, references, implementations, commits, branches)
+- `<leader>cfp/crp/cfn`: Copy file path to clipboard (absolute, relative, filename only)
+  - In visual mode, appends line numbers (e.g., `file.lua:10-15`)
+- `<leader>cc/ce/co/cr`: CopilotChat (toggle, explain, optimize, reset) — works in normal and visual
+- `<leader>db/dB/dc`: DAP breakpoint (toggle, list, conditional); `<leader>de` evaluate expression; `<leader>dl` launch Lua adapter
+- `<F5/10/11/12>`: DAP continue / step over / step into / step out
 - `<leader>*e`: Explorers (Neo-tree for files, git, buffers)
+- `<leader>tt`: Toggle floating terminal (snacks.nvim)
 - `<A-h/j/k/l>`: Window navigation
 - Arrow keys: Scrolling (plain) and half-paging (Shift)
-- LSP keymaps: `gd`, `gD`, `gi`, `gr`, `<space>D`, `g?` (set on LspAttach)
+- LSP keymaps: `gd`, `gD`, `gi`, `gr`, `<space>D`, `g?` (set on LspAttach — note `<leader>gd/gr/gi` are Telescope variants)
 
 ## Adding New Plugins
 

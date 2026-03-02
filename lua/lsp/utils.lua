@@ -31,20 +31,19 @@ function LSPUtils.set_lsp_keymaps(event)
   vim.keymap.set('n', 'g?', vim.diagnostic.open_float, opts)
 end
 
---- TODO: Maybe don't format with *every* attached client that supports it.
----
 --- Formats the current buffer using the LSP client.
 --- Expects autocmd event-args as `event`.
 --- See :h event-args
 ---@private
 function LSPUtils.format_buffer_with_lsp(event)
-  local active_clients = vim.lsp.get_clients({ bufnr = event.buf })
-
-  for _, client in ipairs(active_clients) do
-    if client ~= nil and client:supports_method("textDocument/formatting", event.buf) then
-      vim.lsp.buf.format({ bufnr = event.buf })
-    end
-  end
+  local clients = vim.lsp.get_clients({
+    bufnr = event.buf,
+    method = "textDocument/formatting",
+  })
+  if #clients == 0 then return end
+  -- When multiple clients support formatting, the first is used.
+  -- Ordering from vim.lsp.get_clients() is not guaranteed stable.
+  vim.lsp.buf.format({ bufnr = event.buf, id = clients[1].id })
 end
 
 function LSPUtils.create_lsp_autocommands()

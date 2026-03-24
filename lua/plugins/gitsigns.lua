@@ -30,10 +30,10 @@ function M.config()
         return '<Ignore>'
       end, { expr = true, buffer = bufnr })
 
-      vim.keymap.set({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', { buffer = bufnr })
-      vim.keymap.set({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>', { buffer = bufnr })
+      vim.keymap.set({ 'n', 'v' }, '<leader>hs', gs.stage_hunk, { buffer = bufnr, desc = "Stage hunk" })
+      vim.keymap.set({ 'n', 'v' }, '<leader>hr', gs.reset_hunk, { buffer = bufnr, desc = "Reset hunk" })
       vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame, { buffer = bufnr })
-      vim.keymap.set('n', '<leader>bl', gs.blame_line, { buffer = bufnr })
+      vim.keymap.set('n', '<leader>hd', gs.diffthis, { buffer = bufnr, desc = "Diff against index" })
     end
   }
 end

@@ -17,22 +17,33 @@ function M.config()
     },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
+      local get_visual_selection = require("utils").get_visual_selection
 
-      vim.keymap.set('n', ']c', function()
+      next_hunk = function()
         if vim.wo.diff then return ']c' end
         vim.schedule(function() gs.next_hunk() end)
         return '<Ignore>'
-      end, { expr = true, buffer = bufnr })
+      end
 
-      vim.keymap.set('n', '[c', function()
+      previous_hunk = function()
         if vim.wo.diff then return '[c' end
         vim.schedule(function() gs.prev_hunk() end)
         return '<Ignore>'
-      end, { expr = true, buffer = bufnr })
+      end
 
-      vim.keymap.set({ 'n', 'v' }, '<leader>hs', gs.stage_hunk, { buffer = bufnr, desc = "Stage hunk" })
-      vim.keymap.set({ 'n', 'v' }, '<leader>hr', gs.reset_hunk, { buffer = bufnr, desc = "Reset hunk" })
-      vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame, { buffer = bufnr })
+      stage_hunk = function()
+        gs.stage_hunk(get_visual_selection())
+      end
+
+      reset_hunk = function()
+        gs.reset_hunk(get_visual_selection())
+      end
+
+      vim.keymap.set('n', ']c', next_hunk, { expr = true, buffer = bufnr, desc = "Next Hunk" })
+      vim.keymap.set('n', '[c', previous_hunk, { expr = true, buffer = bufnr, desc = "Previous Hunk" })
+      vim.keymap.set({ 'n', 'v' }, '<leader>hs', stage_hunk, { buffer = bufnr, desc = "Stage hunk" })
+      vim.keymap.set({ 'n', 'v' }, '<leader>hr', reset_hunk, { buffer = bufnr, desc = "Reset hunk" })
+      vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame, { buffer = bufnr, desc = "Toggle Line Blame" })
       vim.keymap.set('n', '<leader>hd', gs.diffthis, { buffer = bufnr, desc = "Diff against index" })
     end
   }

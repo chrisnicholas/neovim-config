@@ -1,8 +1,10 @@
 local ENABLED_LSP_CONFIGS = {
   "bashls",
+  "cssls",
   "cucumber_language_server",
-  "gopls",
   "golangci_lint_ls",
+  "gopls",
+  "html",
   "lua_ls",
   "marksman",
   "pyright",

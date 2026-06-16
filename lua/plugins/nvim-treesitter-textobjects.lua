@@ -1,50 +1,14 @@
-local parsers = {
-  "bash",
-  "c",
-  "css",
-  "dockerfile",
-  "go",
-  "html",
-  "javascript",
-  "json",
-  "lua",
-  "markdown",
-  "markdown_inline",
-  "python",
-  "query",
-  "ruby",
-  "rust",
-  "swift",
-  "terraform",
-  "typescript",
-  "vim",
-  "vimdoc",
-}
-
+-- Treesitter text objects. Works against the parsers in site/parser/ and the
+-- queries vendored under nvim/queries/ (and the plugin's own textobjects.scm);
+-- it does not depend on the nvim-treesitter core plugin.
 ---@type LazyPluginSpec
 local M = {
-  "nvim-treesitter/nvim-treesitter",
+  "nvim-treesitter/nvim-treesitter-textobjects",
+  branch = "main",
   lazy = false,
-  build = ":TSUpdate",
-  dependencies = {
-    { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
-    "nvim-treesitter/nvim-treesitter-context",
-  },
 }
 
 function M.config()
-  require("nvim-treesitter").install(parsers)
-
-  -- Enable treesitter highlighting and indentation for filetypes with a parser
-  vim.api.nvim_create_autocmd("FileType", {
-    callback = function(args)
-      if pcall(vim.treesitter.start, args.buf) then
-        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-      end
-    end,
-  })
-
-  -- Textobjects
   require("nvim-treesitter-textobjects").setup({
     select = { lookahead = true },
     move = { set_jumps = true },
@@ -71,16 +35,6 @@ function M.config()
   local ts_swap = require("nvim-treesitter-textobjects.swap")
   vim.keymap.set("n", "<leader>a", function() ts_swap.swap_next("@parameter.inner") end, { desc = "Swap next parameter" })
   vim.keymap.set("n", "<leader>A", function() ts_swap.swap_previous("@parameter.inner") end, { desc = "Swap prev parameter" })
-
-  -- Treesitter context (sticky function/class headers)
-  require("treesitter-context").setup({ enable = true })
-
-  -- Code Folding
-  vim.opt.foldmethod = "expr"
-  vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-  vim.opt.foldlevel = 99
-  vim.opt.foldlevelstart = -1
-  vim.opt.foldenable = true
 end
 
 return M

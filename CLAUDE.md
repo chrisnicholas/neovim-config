@@ -59,7 +59,12 @@ lua/
 - `lua/plugins/telescope.lua`: Fuzzy finder keymaps (`<leader>f*`, `<leader>g*`)
 - `lua/plugins/neo-tree.lua`: File explorer (`<leader>fe`, `<leader>ge`, `<leader>be`)
 - `lua/plugins/snacks.lua`: Dashboard, indent guides, scope highlighting, terminal toggle
-- `lua/plugins/nvim-treesitter.lua`: Treesitter configuration
+- Treesitter (uses Neovim's built-in `vim.treesitter`, not the nvim-treesitter core plugin):
+  - `lua/config/treesitter.lua`: Enables highlighting + expr-folding per filetype
+  - `lua/plugins/nvim-treesitter-textobjects.lua`: Text object select/move/swap keymaps
+  - `lua/plugins/nvim-treesitter-context.lua`: Sticky function/class headers
+  - `queries/`: Vendored `.scm` queries (see `queries/README.md`)
+  - `scripts/build-parsers.sh`: Compiles parsers into `site/parser/` (run on a new machine)
 - `lua/plugins/copilot.lua`: GitHub Copilot (`copilot.vim`) + CopilotChat (`<leader>cc/ce/co/cr`)
 - `lua/plugins/dap.lua`: Debug Adapter Protocol — auto-opens dapui on session start; loads `launch.json` for codelldb; includes a Lua DAP adapter via `one-small-step-for-vimkind`
 
@@ -124,4 +129,6 @@ Example: `autocmd.filetype("go", "setlocal noexpandtab shiftwidth=0 tabstop=4")`
 - Restart Neovim to reload configuration
 - Use `:Lazy sync` to install/update plugins
 - Use `:LspInfo` to check LSP server status
-- Use `:checkhealth` to diagnose issues
+- Use `:checkhealth` to diagnose issues (incl. `:checkhealth vim.treesitter`)
+- On a new machine, run `scripts/build-parsers.sh` to compile treesitter parsers
+  into `~/.local/share/nvim/site/parser/`

@@ -1,4 +1,5 @@
 require('config.opts')
 require('config.keymap')
 require('config.autocmd')
+require('config.treesitter')
 require('config.lazy')

@@ -59,14 +59,20 @@ M.opts = {
     bind_to_cwd = false,
     follow_current_file = { enabled = true },
     use_libuv_file_watcher = true,
+    window = {
+      mappings = {
+        -- filesystem-only commands; keep them source-local so the git_status
+        -- and buffers sources don't warn about invalid mappings.
+        ["/"] = "filter_as_you_type",
+        ["<esc>"] = "clear_filter",
+      },
+    },
   },
   window = {
     mappings = {
       ["l"] = "open",
       ["h"] = "close_node",
       ["<space>"] = "none",
-      ["/"] = "filter_as_you_type",
-      ["<esc>"] = "clear_filter",
       ["Y"] = {
         function(state)
           local node = state.tree:get_node()

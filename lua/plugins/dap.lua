@@ -184,10 +184,10 @@ function M.config()
     },
   }
 
-  -- Add configurations from launch.json
-  require('dap.ext.vscode').load_launchjs(nil, {
-    ['codelldb'] = { 'c' },
-  })
+  -- Map launch.json `codelldb` entries to the `c` filetype. `.vscode/launch.json`
+  -- is now read automatically on-demand (see :help dap-providers), so the old
+  -- `load_launchjs` call is gone -- only the type->filetype mapping remains.
+  require('dap.ext.vscode').type_to_filetypes['codelldb'] = { 'c' }
 end
 
 return M

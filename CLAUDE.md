@@ -62,6 +62,15 @@ lua/
 - `lua/plugins/nvim-treesitter.lua`: Treesitter configuration
 - `lua/plugins/copilot.lua`: GitHub Copilot (`copilot.vim`) + CopilotChat (`<leader>cc/ce/co/cr`)
 - `lua/plugins/dap.lua`: Debug Adapter Protocol — auto-opens dapui on session start; loads `launch.json` for codelldb; includes a Lua DAP adapter via `one-small-step-for-vimkind`
+- `lua/config/debug.lua`: Bootstraps `one-small-step-for-vimkind` (osv) *outside* lazy.nvim so the config's own startup can be debugged. Called as the first line of `init.lua`; a no-op unless `NVIM_DEBUG` is set. When set, it clones osv (to `stdpath('data')/debug/`) and calls `osv.launch({ blocking = true })`, blocking startup until a DAP client attaches — letting you breakpoint *before* `require('config.opts')`. Set `NVIM_DEBUG_LOG=1` as well to write an osv protocol log to `stdpath('data')/osv.log` for diagnosing attach/stepping issues.
+
+#### Debugging the config itself
+1. Debuggee: `NVIM_DEBUG=1 nvim` — startup **blocks waiting for a debugger** (this is expected, not a hang; clones osv on first run).
+2. Debugger: a separate plain `nvim`; open this repo's `init.lua`, `<leader>db` on a line, `<F5>` and pick **"Attach to running Neovim instance"** (the `nlua` adapter on port 8086). Startup then resumes and stops at your breakpoint.
+
+Stepping caveats (osv limitations, not bugs in this config):
+- **Don't step *into* a `require()` call.** It lands in Neovim's package loader (`vim/_init_packages`), not your module, and stepping back *out* across that C boundary hangs the session. **Step *over*** (`<F10>`) `require` lines instead.
+- To debug inside a module, set a breakpoint *in that file* and continue to it. Step into/over/out (`<F11>`/`<F10>`/`<F12>`) all work normally for plain Lua calls (e.g. stepping from `config/autocmd.lua` into `utils/autocmd.lua` and back).
 
 ### Keymap Conventions
 - `<leader>ff/fg/fb/fh/fs/fn/fd/fa`: Telescope (files, grep, buffers, help, symbols, notifications, diagnostics, autocommands)
@@ -124,4 +133,7 @@ Example: `autocmd.filetype("go", "setlocal noexpandtab shiftwidth=0 tabstop=4")`
 - Restart Neovim to reload configuration
 - Use `:Lazy sync` to install/update plugins
 - Use `:LspInfo` to check LSP server status
-- Use `:checkhealth` to diagnose issues
+- Use `:checkhealth` to diagnose issues (incl. `:checkhealth vim.treesitter`)
+- On a new machine, run `scripts/build-parsers.sh` to compile treesitter parsers
+  into `~/.local/share/nvim/site/parser/`
+- Run `scripts/test.sh` for the Lua test suite (headless plenary/busted under `tests/`)

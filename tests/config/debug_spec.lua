@@ -54,10 +54,48 @@ describe('config.debug', function()
     end)
   end)
 
+  describe('quietly', function()
+    it('swallows print output and restores the original print', function()
+      local original = _G.print
+      local captured = nil
+      debug_mod.quietly(function()
+        print('this should be swallowed')
+        captured = _G.print
+      end)
+      assert.are_not.equal(original, captured) -- print was replaced inside
+      assert.equals(original, _G.print)        -- and restored afterwards
+    end)
+
+    it('restores print even when the body errors', function()
+      local original = _G.print
+      assert.has_error(function()
+        debug_mod.quietly(function() error('boom') end)
+      end)
+      assert.equals(original, _G.print)
+    end)
+  end)
+
   describe('setup', function()
     it('is a no-op when debugging is disabled', function()
       -- env = {} -> disabled, so osv is never required and nothing blocks.
       assert.is_false(debug_mod.setup({ env = {} }))
+    end)
+
+    it('launches the DAP server when debugging is enabled', function()
+      local launched
+      local result = debug_mod.setup({
+        env = { [debug_mod.env_var] = '1', [debug_mod.log_env_var] = '1' },
+        -- Stub the install + launch side effects so nothing real happens.
+        exists = function() return true end,
+        clone = function() error('should not clone') end,
+        prepend = function() end,
+        launch = function(o) launched = o end,
+      })
+
+      assert.is_true(result)
+      assert.equals(debug_mod.port, launched.port)
+      assert.is_true(launched.blocking)
+      assert.is_true(launched.log)
     end)
   end)
 end)

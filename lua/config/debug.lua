@@ -69,7 +69,7 @@ end
 -- message triggers a blocking "Press ENTER or type command to continue" prompt
 -- that looks like a launch error. Run `fn` with plain `print` swallowed so the
 -- (blocking) launch stays quiet; restored afterwards even on error.
-local function quietly(fn)
+function M.quietly(fn)
   local saved = _G.print
   _G.print = function() end
   local ok, err = pcall(fn)
@@ -89,8 +89,13 @@ function M.setup(opts)
   end
   M.ensure_installed(opts)
   local log = M.log_enabled(opts.env)
-  quietly(function()
-    require('osv').launch({ port = M.port, blocking = true, log = log })
+  -- `launch` is injectable so the enabled path can be unit-tested without
+  -- requiring osv or starting a blocking DAP server.
+  local launch = opts.launch or function(o)
+    require('osv').launch(o)
+  end
+  M.quietly(function()
+    launch({ port = M.port, blocking = true, log = log })
   end)
   return true
 end

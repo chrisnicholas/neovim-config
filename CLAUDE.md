@@ -137,3 +137,14 @@ Example: `autocmd.filetype("go", "setlocal noexpandtab shiftwidth=0 tabstop=4")`
 - On a new machine, run `scripts/build-parsers.sh` to compile treesitter parsers
   into `~/.local/share/nvim/site/parser/`
 - Run `scripts/test.sh` for the Lua test suite (headless plenary/busted under `tests/`)
+- CI runs `scripts/test.sh` on pushes/PRs to `main` (`.github/workflows/test.yml`)
+
+### Writing testable config code
+
+- When developing, make configuration code unit-testable whenever possible.
+  Separate logic from editor side effects — either as pure functions (e.g.
+  `lua/utils/path.lua`) or by making side effects injectable via an `opts` table
+  (e.g. `lua/config/debug.lua`'s `ensure_installed`/`setup`, where
+  clone/prepend/launch are passed in and stubbed in tests).
+- When code is testable, write the test first (TDD), then the implementation.
+- Specs live under `tests/`, mirror the `lua/` tree, and are named `*_spec.lua`.

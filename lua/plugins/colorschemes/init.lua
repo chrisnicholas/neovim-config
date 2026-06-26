@@ -1,5 +1,4 @@
-local LIGHT_COLORSCHEME = 'github_light_default'
-local DARK_COLORSCHEME = 'github_dark_dimmed'
+local theme = require('plugins.colorschemes.theme')
 
 local M = {}
 
@@ -26,16 +25,11 @@ function M.opts()
 end
 
 function M.set_light_mode()
-  M.set_colorscheme(LIGHT_COLORSCHEME, 'light', {})
+  theme.set_mode('light')
 end
 
 function M.set_dark_mode()
-  M.set_colorscheme(DARK_COLORSCHEME, 'dark', {})
-end
-
-function M.set_colorscheme(colorscheme, variant, opts)
-  vim.api.nvim_set_option_value('background', variant, opts)
-  vim.cmd.colorscheme(colorscheme)
+  theme.set_mode('dark')
 end
 
 return M.config()

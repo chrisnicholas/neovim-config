@@ -39,6 +39,22 @@ local LspConfigSpec = {
   cmd = "LspInfo",
 }
 
+--- Load a server's custom config from `lua/lsp/configs/<server>.lua`, returning
+--- an empty table when the module does not exist. Pure (aside from the require).
+function LspConfigSpec.load_custom_config(server)
+  local ok, custom_config = pcall(require, ("lsp.configs.%s"):format(server))
+  if not ok then
+    return {}
+  end
+  return custom_config
+end
+
+--- Merge a server's default config with its custom config; custom keys win,
+--- nested tables are deep-merged. Pure.
+function LspConfigSpec.merge_server_config(default_config, custom_config)
+  return vim.tbl_deep_extend("force", default_config, custom_config)
+end
+
 function LspConfigSpec.config(_, opts)
   opts = opts or {}
 
@@ -53,14 +69,8 @@ function LspConfigSpec.config(_, opts)
   -- Enable LSP Configurations
   for _, server in ipairs(ENABLED_LSP_CONFIGS) do
     local default_config = vim.lsp.config[server] or {}
-
-    -- Merge custom config from `/lua/lsp/*.lua` if exists
-    local ok, custom_config = pcall(require, ("lsp.configs.%s"):format(server))
-    if not ok then
-      custom_config = {}
-    end
-
-    local config = vim.tbl_deep_extend("force", default_config, custom_config)
+    local custom_config = LspConfigSpec.load_custom_config(server)
+    local config = LspConfigSpec.merge_server_config(default_config, custom_config)
     vim.lsp.config(server, config)
   end
 

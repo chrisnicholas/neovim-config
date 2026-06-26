@@ -46,19 +46,35 @@ function M.init()
   })
 end
 
-function M.bootstrap()
-  local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-  if not vim.uv.fs_stat(lazypath) then
+-- Clone lazy.nvim if missing and prepend it to the runtimepath. All side
+-- effects are injectable (mirroring config.debug's ensure_installed) so the
+-- logic can be unit-tested without touching git or the real rtp. Returns the
+-- install path.
+function M.bootstrap(opts)
+  opts = opts or {}
+  local lazypath = opts.path or (vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
+  local exists = opts.exists or function(p)
+    return vim.uv.fs_stat(p) ~= nil
+  end
+  local clone = opts.clone or function(p)
     vim.fn.system({
       'git',
       'clone',
       '--filter=blob:none',
       'https://github.com/folke/lazy.nvim.git',
       '--branch=stable', -- latest stable release
-      lazypath,
+      p,
     })
   end
-  vim.opt.rtp:prepend(lazypath)
+  local prepend = opts.prepend or function(p)
+    vim.opt.rtp:prepend(p)
+  end
+
+  if not exists(lazypath) then
+    clone(lazypath)
+  end
+  prepend(lazypath)
+  return lazypath
 end
 
-M.init()
+return M

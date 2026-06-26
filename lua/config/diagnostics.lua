@@ -4,6 +4,22 @@ local Diagnostics = {
   default_config = { virtual_lines = false, virtual_text = false }
 }
 
+--- Keep only the highest-severity diagnostic per line. A lower severity number
+--- means higher severity (ERROR=1 < WARN=2 < ...), so the entry with the
+--- smallest severity wins for each `lnum`. Pure: returns a new list, output
+--- order is not guaranteed.
+---@param diagnostics vim.Diagnostic[]
+function Diagnostics.highest_severity_per_line(diagnostics)
+  local severity_by_line = {}
+  for _, d in ipairs(diagnostics) do
+    local existing = severity_by_line[d.lnum]
+    if not existing or d.severity < existing.severity then
+      severity_by_line[d.lnum] = d
+    end
+  end
+  return vim.tbl_values(severity_by_line)
+end
+
 ---@param config? vim.diagnostic.Opts
 function Diagnostics.init(config)
   config = vim.tbl_deep_extend("force", Diagnostics.default_config, config or {})
@@ -23,16 +39,7 @@ function Diagnostics.init(config)
 
   vim.diagnostic.handlers.signs = {
     show = function(_, bufnr, diagnostics, opts)
-      -- Keep only highest severity diagnostic per line
-      local severity_by_line = {}
-      for _, d in ipairs(diagnostics) do
-        local existing = severity_by_line[d.lnum]
-        if not existing or d.severity < existing.severity then
-          severity_by_line[d.lnum] = d
-        end
-      end
-
-      local filtered = vim.tbl_values(severity_by_line)
+      local filtered = Diagnostics.highest_severity_per_line(diagnostics)
       orig_signs_handler.show(SIGNS_NS, bufnr, filtered, opts)
     end,
     hide = function(_, bufnr)

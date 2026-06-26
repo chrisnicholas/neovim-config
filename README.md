@@ -29,10 +29,18 @@ Specs live under `tests/`, mirroring the `lua/` tree, and are named
 tests/
 ├── minimal_init.lua        # runtimepath setup for headless runs
 ├── config/
+│   ├── augroup_spec.lua
 │   ├── debug_spec.lua
+│   ├── diagnostics_spec.lua
+│   ├── lazy_spec.lua
 │   └── signs_spec.lua
 ├── lsp/
 │   └── utils_spec.lua
+├── plugins/
+│   ├── colorschemes/
+│   │   └── theme_spec.lua
+│   ├── gitsigns_spec.lua
+│   └── lsp_spec.lua
 └── utils/
     ├── init_spec.lua
     └── path_spec.lua

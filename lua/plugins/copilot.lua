@@ -89,10 +89,10 @@ CopilotChatSpec.opts = {
 }
 
 CopilotChatSpec.keys = {
-  { '<leader>cc', '<CMD>CopilotChatToggle<CR>', mode = {'n', 'v'} },
-  { '<leader>ce', '<CMD>CopilotChatExplain<CR>', mode = {'n', 'v'} },
-  { '<leader>co', '<CMD>CopilotChatOptimize<CR>', mode = {'n', 'v'} },
-  { '<leader>cr', '<CMD>CopilotChatReset<CR>', mode = {'n'} },
+  { '<leader>cc', '<CMD>CopilotChatToggle<CR>', mode = {'n', 'v'}, desc = 'CopilotChat Toggle' },
+  { '<leader>ce', '<CMD>CopilotChatExplain<CR>', mode = {'n', 'v'}, desc = 'CopilotChat Explain' },
+  { '<leader>co', '<CMD>CopilotChatOptimize<CR>', mode = {'n', 'v'}, desc = 'CopilotChat Optimize' },
+  { '<leader>cr', '<CMD>CopilotChatReset<CR>', mode = {'n'}, desc = 'CopilotChat Reset' },
 }
 
 return { CopilotSpec, CopilotChatSpec }

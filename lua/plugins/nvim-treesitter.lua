@@ -33,7 +33,20 @@ local M = {
 }
 
 function M.config()
-  require("nvim-treesitter").install(parsers)
+  local ts = require("nvim-treesitter")
+
+  -- Install any parsers we don't have yet (fresh machine)...
+  ts.install(parsers)
+  -- ...then self-heal a half-migrated install: parsers whose `.so` is present
+  -- but whose highlight queries aren't linked into the install dir. Neither
+  -- install() (skips installed parsers) nor update()/:TSUpdate (short-circuits
+  -- on the grammar revision) repairs this, so force a reinstall of just the
+  -- affected langs. See lua/utils/treesitter.lua for the why.
+  local site = vim.fs.joinpath(vim.fn.stdpath("data"), "site")
+  local unlinked = require("utils.treesitter").unlinked_query_langs(site, parsers)
+  if #unlinked > 0 then
+    ts.install(unlinked, { force = true })
+  end
 
   -- Enable treesitter highlighting and indentation for filetypes with a parser
   vim.api.nvim_create_autocmd("FileType", {

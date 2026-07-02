@@ -2,3 +2,7 @@
 plugin/*
 pack/*
 *.vim
+
+# LuaCov output (COVERAGE=1 scripts/test.sh)
+luacov.stats.out
+luacov.report.out

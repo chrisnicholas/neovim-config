@@ -1,0 +1,17 @@
+-- LuaCov configuration, shared by the collector (tests/minimal_init.lua, via
+-- runner.init()) and the `luacov` reporter (scripts/test.sh). Both processes run
+-- from the repo root. See `luarocks doc luacov` for the full option list.
+local root = os.getenv('PWD') or '.'
+
+return {
+  statsfile = 'luacov.stats.out',
+  include = { 'lua/' },
+  exclude = { 'share/nvim', 'plenary', 'luacov', 'tests/' },
+
+  -- List files that no test loads at 0%, so the total reflects the whole lua/
+  -- tree rather than only files a test happened to require. The path is absolute
+  -- so the generated entries match the absolute paths Neovim's module loader
+  -- records for tested files; a relative path here would duplicate every file
+  -- (once tested, once at 0%). Requires the luafilesystem rock.
+  includeuntestedfiles = { root .. '/lua' },
+}

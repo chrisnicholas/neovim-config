@@ -23,5 +23,12 @@ jobs:
           git clone --depth 1 https://github.com/nvim-lua/plenary.nvim \
             "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/lazy/plenary.nvim"
 
+      - name: Install LuaCov
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y luarocks
+          sudo luarocks install luacov
+          sudo luarocks install luafilesystem  # for includeuntestedfiles
+
       - name: Run tests
-        run: scripts/test.sh
+        run: COVERAGE=1 scripts/test.sh

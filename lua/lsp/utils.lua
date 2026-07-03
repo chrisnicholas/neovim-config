@@ -46,6 +46,33 @@ function LSPUtils.format_buffer_with_lsp(event)
   vim.lsp.buf.format({ bufnr = event.buf, id = clients[1].id })
 end
 
+--- Organizes Go imports via gopls' source.organizeImports code action.
+--- Expects autocmd event-args as `event`.
+--- See :h event-args
+function LSPUtils.goimports(event)
+  local client = vim.lsp.get_clients({ bufnr = event.buf, name = "gopls" })[1]
+  if not client then return end
+  local encoding = LSPUtils.get_client_encoding(client)
+  local params = {
+    textDocument = { uri = vim.uri_from_bufnr(event.buf) },
+    range = {
+      start = { line = 0, character = 0 },
+      ["end"] = { line = 0, character = 0 },
+    },
+    context = { only = { "source.organizeImports" } },
+  }
+
+  local result = vim.lsp.buf_request_sync(event.buf, "textDocument/codeAction", params, 1000)
+
+  for _, res in pairs(result or {}) do
+    for _, r in pairs(res.result or {}) do
+      if r.edit then
+        vim.lsp.util.apply_workspace_edit(r.edit, encoding)
+      end
+    end
+  end
+end
+
 function LSPUtils.create_lsp_autocommands()
   local group_config = require("config.augroup").lsp
   local lsp_augroup = vim.api.nvim_create_augroup(group_config.name, group_config.opts)

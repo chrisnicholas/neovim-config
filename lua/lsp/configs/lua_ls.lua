@@ -3,7 +3,7 @@
 --- Reference:
 --- - https://luals.github.io/wiki/settings/
 ---
----@type vim.lsp.ClientConfig
+---@type vim.lsp.Config
 local LuaLS = {
   settings = {
     Lua = {

@@ -3,7 +3,7 @@
 --- Reference:
 --- - https://github.com/nametake/golangci-lint-langserver
 ---
----@type vim.lsp.ClientConfig
+---@type vim.lsp.Config
 local GolangCILintLS = {
   init_options = {
     -- If you need to specify the golangci-lint binary, uncomment the line below.

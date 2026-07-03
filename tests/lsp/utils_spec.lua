@@ -50,4 +50,55 @@ describe('lsp.utils', function()
       assert.same({ bufnr = 7, id = 42 }, format_args)
     end)
   end)
+
+  describe('goimports', function()
+    local saved_get_clients, saved_request_sync, saved_apply_edit
+
+    before_each(function()
+      saved_get_clients = vim.lsp.get_clients
+      saved_request_sync = vim.lsp.buf_request_sync
+      saved_apply_edit = vim.lsp.util.apply_workspace_edit
+    end)
+
+    after_each(function()
+      vim.lsp.get_clients = saved_get_clients
+      vim.lsp.buf_request_sync = saved_request_sync
+      vim.lsp.util.apply_workspace_edit = saved_apply_edit
+    end)
+
+    it('is a no-op when no gopls client is attached', function()
+      local requested = false
+      vim.lsp.get_clients = function() return {} end
+      vim.lsp.buf_request_sync = function() requested = true end
+
+      LSPUtils.goimports({ buf = 7 })
+
+      assert.is_false(requested)
+    end)
+
+    it('applies workspace edits from the organizeImports code action', function()
+      local buf = vim.api.nvim_create_buf(false, true)
+      -- A distinct name so uri_from_bufnr(buf) differs from the current
+      -- window's (unnamed) buffer URI — otherwise both are "file://" and the
+      -- URI assertion below cannot catch a wrong-buffer regression.
+      vim.api.nvim_buf_set_name(buf, 'goimports-test-target.go')
+      local applied = {}
+      vim.lsp.get_clients = function() return { { offset_encoding = 'utf-8' } } end
+      vim.lsp.buf_request_sync = function(bufnr, method, params)
+        assert.equals(buf, bufnr)
+        assert.equals('textDocument/codeAction', method)
+        assert.equals(vim.uri_from_bufnr(buf), params.textDocument.uri)
+        assert.same({ only = { 'source.organizeImports' } }, params.context)
+        return { { result = { { edit = 'EDIT' }, { command = 'no-edit' } } } }
+      end
+      vim.lsp.util.apply_workspace_edit = function(edit, encoding)
+        table.insert(applied, { edit, encoding })
+      end
+
+      LSPUtils.goimports({ buf = buf })
+
+      assert.same({ { 'EDIT', 'utf-8' } }, applied)
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end)
+  end)
 end)

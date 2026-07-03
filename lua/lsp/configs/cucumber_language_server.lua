@@ -1,6 +1,6 @@
 --- CucumberLS configuration
 ---
----@type vim.lsp.ClientConfig
+---@type vim.lsp.Config
 local CucumberLS = {
   cmd = { "cucumber-language-server", "--stdio" },
   filetypes = { "cucumber", "feature" },

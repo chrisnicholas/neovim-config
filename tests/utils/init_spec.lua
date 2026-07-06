@@ -17,6 +17,14 @@ describe('utils.get_visual_selection', function()
     }))
   end)
 
+  it('returns the line range in blockwise visual mode', function()
+    assert.same({ 3, 8 }, utils.get_visual_selection({
+      mode = '\22', -- raw Ctrl-V byte, as returned by vim.fn.mode()
+      visual_start = 3,
+      visual_end = 8,
+    }))
+  end)
+
   it('returns nil outside visual mode', function()
     assert.is_nil(utils.get_visual_selection({
       mode = 'n',

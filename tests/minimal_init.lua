@@ -5,7 +5,9 @@
 -- lua/ is required so its debug hook can record line hits. PlenaryBustedDirectory
 -- runs one child Neovim per spec file; each child loads this init, so each one
 -- must flush its stats on exit. runner.save_stats() merges into the shared
--- luacov.stats.out, accumulating coverage across every child process.
+-- luacov.stats.out via an unlocked read-modify-write, so concurrent children
+-- clobber each other's hits — scripts/test.sh runs the children sequentially
+-- under coverage to keep the merge safe.
 if vim.env.COVERAGE then
   local ok, runner = pcall(require, 'luacov.runner')
   if ok then

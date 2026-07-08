@@ -26,10 +26,16 @@ cd "$(dirname "$0")/.."
 command -v nvim >/dev/null || { echo "error: nvim not found" >&2; exit 1; }
 
 COVERAGE="${COVERAGE:-}"
+# Under coverage the spec children must run sequentially: each child merges its
+# hits into the shared luacov.stats.out on exit via an unlocked
+# read-modify-write (luacov.runner.save_stats), so concurrent exits clobber
+# each other's data and whole spec files report 0%.
+SEQUENTIAL=false
 if [ -n "$COVERAGE" ]; then
   command -v luarocks >/dev/null || { echo "error: COVERAGE set but luarocks not found" >&2; exit 1; }
   eval "$(luarocks path)"
   export COVERAGE
+  SEQUENTIAL=true
   rm -f luacov.stats.out luacov.report.out
 fi
 
@@ -38,7 +44,7 @@ if [ "$#" -gt 0 ]; then
     -c "PlenaryBustedFile $1"
 else
   nvim --headless --noplugin -u tests/minimal_init.lua \
-    -c "PlenaryBustedDirectory tests/ { minimal_init = 'tests/minimal_init.lua' }"
+    -c "PlenaryBustedDirectory tests/ { minimal_init = 'tests/minimal_init.lua', sequential = $SEQUENTIAL }"
 fi
 
 if [ -n "$COVERAGE" ] && [ -f luacov.stats.out ]; then

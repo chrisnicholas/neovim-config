@@ -15,6 +15,14 @@ local ENABLED_LSP_CONFIGS = {
   "yamlls",
 }
 
+-- Mason packages that aren't LSP servers. mason-lspconfig's `ensure_installed`
+-- only understands servers, so these go through the registry API instead.
+-- golangci_lint_ls is a thin wrapper -- it shells out to the real
+-- `golangci-lint` binary, which nothing else on the box installs.
+local ENABLED_MASON_TOOLS = {
+  "golangci-lint",
+}
+
 ---@type LazyPluginSpec
 local MasonSpec = {
   "williamboman/mason.nvim",
@@ -55,11 +63,32 @@ function LspConfigSpec.merge_server_config(default_config, custom_config)
   return vim.tbl_deep_extend("force", default_config, custom_config)
 end
 
+--- Kick off a Mason install for each package in `tools` that isn't present yet.
+--- Returns the names it started installing, so the behaviour is assertable.
+--- Unknown package names are skipped rather than raising: a registry that has
+--- not refreshed yet shouldn't take LSP setup down with it.
+--- `registry` is injectable; defaults to the real mason-registry.
+function LspConfigSpec.ensure_mason_tools(tools, registry)
+  registry = registry or require("mason-registry")
+
+  local started = {}
+  for _, name in ipairs(tools) do
+    local ok, pkg = pcall(registry.get_package, name)
+    if ok and not pkg:is_installed() then
+      pkg:install()
+      table.insert(started, name)
+    end
+  end
+  return started
+end
+
 function LspConfigSpec.config(_, opts)
   opts = opts or {}
 
   -- Diagnostics
   require("config.diagnostics").init()
+
+  LspConfigSpec.ensure_mason_tools(ENABLED_MASON_TOOLS)
 
   -- Set default capabilitites for all LSP servers
   local capabilities = vim.lsp.protocol.make_client_capabilities()

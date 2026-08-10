@@ -134,8 +134,16 @@ Example: `autocmd.filetype("go", "setlocal noexpandtab shiftwidth=0 tabstop=4")`
 - Use `:Lazy sync` to install/update plugins
 - Use `:LspInfo` to check LSP server status
 - Use `:checkhealth` to diagnose issues (incl. `:checkhealth vim.treesitter`)
-- On a new machine, run `scripts/build-parsers.sh` to compile treesitter parsers
-  into `~/.local/share/nvim/site/parser/`
+- **The `tree-sitter` CLI (>= 0.25) is a hard requirement.** nvim-treesitter's
+  `main` branch shells out to it to compile every parser; without it every
+  startup errors with `ENOENT ... 'tree-sitter'`. Debian's packaged
+  `tree-sitter-cli` lags that floor — use `scripts/bootstrap.sh`, which pulls
+  the upstream prebuilt binary.
+- On a new machine, run `scripts/bootstrap.sh` — it checks hard prerequisites
+  (nvim, git, curl, tar, a C compiler), installs the `tree-sitter` CLI into
+  `~/.local/bin` if the one on PATH is missing or older than 0.25, and restores
+  plugins from `lazy-lock.json`. Treesitter parsers and Mason LSP servers are
+  deliberately left to install on first interactive launch.
 - Run `scripts/test.sh` for the Lua test suite (headless plenary/busted under `tests/`)
 - CI runs `scripts/test.sh` on pushes/PRs to `main` (`.github/workflows/test.yml`)
 

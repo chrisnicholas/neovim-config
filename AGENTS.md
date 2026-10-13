@@ -134,14 +134,14 @@ Example: `autocmd.filetype("go", "setlocal noexpandtab shiftwidth=0 tabstop=4")`
 - Use `:Lazy sync` to install/update plugins
 - Use `:LspInfo` to check LSP server status
 - Use `:checkhealth` to diagnose issues (incl. `:checkhealth vim.treesitter`)
-- **The `tree-sitter` CLI (>= 0.25) is a hard requirement.** nvim-treesitter's
+- **The `tree-sitter` CLI (>= 0.26.1) is a hard requirement.** nvim-treesitter's
   `main` branch shells out to it to compile every parser; without it every
   startup errors with `ENOENT ... 'tree-sitter'`. Debian's packaged
   `tree-sitter-cli` lags that floor — use `scripts/bootstrap.sh`, which pulls
   the upstream prebuilt binary.
 - On a new machine, run `scripts/bootstrap.sh` — it checks hard prerequisites
   (nvim, git, curl, tar, a C compiler), installs the `tree-sitter` CLI into
-  `~/.local/bin` if the one on PATH is missing or older than 0.25, and restores
+  `~/.local/bin` if the one on PATH is missing or older than 0.26.1, and restores
   plugins from `lazy-lock.json`. Treesitter parsers and Mason LSP servers are
   deliberately left to install on first interactive launch.
 - Run `scripts/test.sh` for the Lua test suite (headless plenary/busted under `tests/`)
@@ -156,3 +156,6 @@ Example: `autocmd.filetype("go", "setlocal noexpandtab shiftwidth=0 tabstop=4")`
   clone/prepend/launch are passed in and stubbed in tests).
 - When code is testable, write the test first (TDD), then the implementation.
 - Specs live under `tests/`, mirror the `lua/` tree, and are named `*_spec.lua`.
+- Shell scripts are tested from `tests/scripts/` by sourcing them in bash and
+  calling their functions, so keep a script's side effects inside a `main()`
+  that runs only when executed directly (see `scripts/bootstrap.sh`).
